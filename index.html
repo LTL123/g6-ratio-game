@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数学配对游戏 - 分数小数百分数比例</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 数学配对游戏</h1>
+            <p>找出相等的分数、小数、百分数和比例</p>
+        </header>
+
+        <div class="game-controls">
+            <div class="difficulty-selector">
+                <label for="difficulty">选择难度：</label>
+                <select id="difficulty">
+                    <option value="easy">初级 - 基础转换</option>
+                    <option value="medium">中级 - 包含比例</option>
+                    <option value="hard">高级 - 复杂转换</option>
+                </select>
+            </div>
+            <button id="newGame" class="btn btn-primary">开始新游戏</button>
+            <button id="hint" class="btn btn-secondary">提示</button>
+        </div>
+
+        <div class="game-info">
+            <div class="score">得分: <span id="score">0</span></div>
+            <div class="matches">配对: <span id="matches">0</span>/<span id="totalMatches">0</span></div>
+            <div class="timer">时间: <span id="timer">00:00</span></div>
+        </div>
+
+        <div id="gameBoard" class="game-board">
+            <!-- 游戏卡片将在这里动态生成 -->
+        </div>
+
+        <div id="congratulations" class="congratulations hidden">
+            <div class="congrats-content">
+                <h2>🎉 恭喜完成！</h2>
+                <p>你的得分: <span id="finalScore"></span></p>
+                <p>用时: <span id="finalTime"></span></p>
+                <button id="playAgain" class="btn btn-primary">再玩一次</button>
+            </div>
+        </div>
+
+        <div id="hintModal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h3>💡 提示</h3>
+                <p id="hintText"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
