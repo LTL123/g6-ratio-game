@@ -18,12 +18,12 @@ class MathMatchingGame {
         const data = {
             easy: [
                 // 基础分数、小数、百分数转换
-                { group: 1, values: ['1/2', '0.5', '50%'] },
-                { group: 2, values: ['1/4', '0.25', '25%'] },
-                { group: 3, values: ['3/4', '0.75', '75%'] },
-                { group: 4, values: ['1/5', '0.2', '20%'] },
-                { group: 5, values: ['2/5', '0.4', '40%'] },
-                { group: 6, values: ['1/10', '0.1', '10%'] }
+                { group: 1, values: ['1/2', '0.5', '50%', '50/100'] },
+                { group: 2, values: ['1/4', '0.25', '25%', '25/100'] },
+                { group: 3, values: ['3/4', '0.75', '75%', '75/100'] },
+                { group: 4, values: ['1/5', '0.2', '20%', '20/100'] },
+                { group: 5, values: ['2/5', '0.4', '40%', '40/100'] },
+                { group: 6, values: ['1/10', '0.1', '10%', '10/100'] }
             ],
             medium: [
                 // 包含比例的转换
@@ -65,9 +65,13 @@ class MathMatchingGame {
         
         // 生成游戏数据
         const rawData = this.getGameData();
+        // 随机打乱组顺序，并只取前5组（每组4个，共20个卡片，10对）
+        this.shuffleArray(rawData);
+        const selectedGroups = rawData.slice(0, 5);
+        
         this.gameData = [];
         
-        rawData.forEach(group => {
+        selectedGroups.forEach(group => {
             group.values.forEach(value => {
                 this.gameData.push({
                     id: `${group.group}-${value}`,
@@ -78,7 +82,7 @@ class MathMatchingGame {
             });
         });
         
-        this.totalPairs = rawData.length;
+        this.totalPairs = this.gameData.length / 2;
         this.shuffleArray(this.gameData);
     }
 
@@ -87,12 +91,15 @@ class MathMatchingGame {
         const gameBoard = document.getElementById('gameBoard');
         gameBoard.innerHTML = '';
         
-        this.gameData.forEach(item => {
+        this.gameData.forEach((item, index) => {
             const card = document.createElement('div');
             card.className = 'card';
             card.dataset.id = item.id;
             card.dataset.group = item.group;
             card.textContent = item.value;
+            
+            // Add staggered animation delay
+            card.style.animationDelay = `${index * 0.05}s`;
             
             card.addEventListener('click', () => this.handleCardClick(card, item));
             gameBoard.appendChild(card);
@@ -142,7 +149,7 @@ class MathMatchingGame {
         this.updateDisplay();
         
         if (this.matchedPairs === this.totalPairs) {
-            setTimeout(() => this.gameComplete(), 500);
+            setTimeout(() => this.gameComplete(), 1000);
         }
     }
 
